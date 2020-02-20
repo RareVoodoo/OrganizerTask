@@ -1,8 +1,6 @@
 package ua.testing.model;
 
 
-import ua.testing.controller.ImportanceLevel;
-
 import java.util.ArrayList;
 
 public class Calendar extends Event {

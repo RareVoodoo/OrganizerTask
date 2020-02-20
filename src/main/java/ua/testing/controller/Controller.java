@@ -2,78 +2,91 @@ package ua.testing.controller;
 
 import ua.testing.model.Calendar;
 import ua.testing.model.Event;
+import ua.testing.view.EventListValuesGenerator;
+import ua.testing.view.ImportanceLevel;
 import ua.testing.view.View;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import static ua.testing.view.TextConstant.*;
 
 
 public class Controller {
     Calendar calendar;
     View view;
-    EventSortController eventSortController;
+    EventActionController eventActionController;
     Scanner scanner;
 
     private int userInputValue;
 
-    public Controller(Event calendar,  View view) {
+    /**
+     *
+     * @param calendar
+     * @param view
+     */
+    public Controller(Event calendar, View view) {
         this.calendar = (Calendar) calendar;
         this.view = view;
-        eventSortController = new EventSortController();
+        eventActionController = new EventActionController();
         scanner = new Scanner(System.in);
     }
 
 
-    public void processUser(){
-        fillEventList();
+    public void processUser() throws ParseException {
+        EventListValuesGenerator.fillEventList(EventListValuesGenerator.FIVE_EVENTS,calendar);
         initializeUI(scanner, calendar.getEventList());
-
-
-//        eventSortController.sortEventsByDate(calendar.getEventList());
-//        eventSortController.sortByImportance(calendar.getEventList());
-
-//        view.printEventList(calendar.getEventList());
-
 
     }
 
-    public void submitUserInputWithScanner(Scanner scanner){
+    public void submitUserInputWithScanner(Scanner scanner) {
         while (!scanner.hasNextInt()) {
-            view.printMessage(View.WRONG_INPUT_INT_DATA);
+            view.printMessage(WRONG_INPUT_DATA);
             scanner.next();
         }
         userInputValue = scanner.nextInt();
     }
 
-    public void initializeUI(Scanner scanner, ArrayList<Event> eventsList){
+
+    /**
+     *
+     * @param scanner
+     * @param eventsList
+     * @throws ParseException
+     */
+    public void initializeUI(Scanner scanner, ArrayList<Event> eventsList) throws ParseException {
         boolean isTerminated = false;
 
-        while(!isTerminated){
-            view.loadMainMenuWithMessages(View.MAIN_MENU_MESSAGES);
+        while (!isTerminated) {
+            view.loadMainMenuWithMenuItems(View.bundle.getString(SORT_BY_DATE_MENU_ITEM),
+                    View.bundle.getString(SORT_BY_IMPORTANCE_MENU_ITEM),
+                    View.bundle.getString(COMING_EVENTS_MENU_ITEM),
+                    View.bundle.getString(EXIT_MENU_ITEM));
+
             submitUserInputWithScanner(scanner);
-            switch (userInputValue){
+            switch (userInputValue) {
                 case 1:
-                    eventSortController.sortEventsByDate(eventsList);
+                    eventActionController.sortEventsByDate(eventsList);
                     break;
                 case 2:
-                    eventSortController.sortByImportance(eventsList);
+                    eventActionController.sortByImportance(eventsList);
                     break;
                 case 3:
+                    view.printEventList(eventActionController.calculateComingEvents(eventsList));
+                    view.printSeparator();
+                    break;
+                case 4:
                     isTerminated = true;
                     break;
 
                 default:
-                    view.printMessage(View.WRONG_INPUT_INT_DATA);
+                    view.printMessage(WRONG_INPUT_DATA);
             }
-                view.printEventList(calendar.getEventList());
+            view.printEventList(calendar.getEventList());
         }
     }
 
-    public void fillEventList(){
-        calendar.addNewEvent(new Event("09/25/2019", "Event1", ImportanceLevel.EASY));
-        calendar.addNewEvent(new Event("10/25/2019", "Event2", ImportanceLevel.MEDIUM));
-        calendar.addNewEvent(new Event("10/18/2019", "Event3", ImportanceLevel.IMPORTANT));
-        calendar.addNewEvent(new Event("09/23/2019", "Event4", ImportanceLevel.MEDIUM));
-    }
+
 
 }

@@ -1,7 +1,7 @@
 package ua.testing.model;
 
 
-import ua.testing.controller.ImportanceLevel;
+import ua.testing.view.ImportanceLevel;
 
 public class Event  {
     private String eventDate;
