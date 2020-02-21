@@ -2,11 +2,11 @@ package ua.testing;
 
 import org.junit.Test;
 import ua.testing.controller.Controller;
-import ua.testing.controller.EventActionController;
+import ua.testing.model.EventActionService;
 import ua.testing.view.EventListValuesGenerator;
 import ua.testing.view.ImportanceLevel;
-import ua.testing.model.Calendar;
-import ua.testing.model.Event;
+import ua.testing.model.entity.Calendar;
+import ua.testing.model.entity.Event;
 import ua.testing.view.View;
 
 import static org.junit.Assert.*;
@@ -15,7 +15,7 @@ public class EventSortingTest {
     View view = new View();
     Calendar calendar = new Calendar();
     Calendar sortedCalendar = new Calendar();
-    EventActionController eventActionController = new EventActionController();
+    EventActionService eventActionService = new EventActionService();
     Controller controller = new Controller(calendar, view);
 
     {
@@ -25,7 +25,7 @@ public class EventSortingTest {
     @Test
     public void sortingEventListByDate() {
         generateSortedByDateEventList(sortedCalendar);
-        eventActionController.sortEventsByDate(calendar.getEventList());
+        eventActionService.sortEventsByDate(calendar.getEventList());
         assertEquals(calendar.getEventList(), sortedCalendar.getEventList());
 
     }
@@ -33,7 +33,7 @@ public class EventSortingTest {
     @Test
     public void sortingEventListByImportance() {
         generateSortedByImportanceEventList(sortedCalendar);
-        eventActionController.sortByImportance(calendar.getEventList());
+        eventActionService.sortByImportance(calendar.getEventList());
         assertEquals(calendar.getEventList(), sortedCalendar.getEventList());
     }
 

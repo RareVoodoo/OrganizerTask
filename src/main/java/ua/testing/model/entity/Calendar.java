@@ -1,11 +1,15 @@
-package ua.testing.model;
-
+package ua.testing.model.entity;
 
 import java.util.ArrayList;
 
-public class Calendar extends Event {
-    private ArrayList<Event> eventList = new ArrayList<>();
 
+/**
+ * Represents a Calendar with Event list
+ *
+ */
+public class Calendar extends Event {
+
+    private ArrayList<Event> eventList = new ArrayList<>();
 
     public ArrayList<Event> getEventList() {
         return eventList;

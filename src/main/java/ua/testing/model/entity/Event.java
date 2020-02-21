@@ -1,11 +1,27 @@
-package ua.testing.model;
+package ua.testing.model.entity;
 
 
 import ua.testing.view.ImportanceLevel;
 
+/**
+ * Represents a simple Event with event date, name, and importance
+ *
+ */
 public class Event  {
+    /**
+     * The date of planned event
+     */
     private String eventDate;
+
+
+    /**
+     * The name of planned event
+     */
     private String eventName;
+
+    /**
+     * The Importance level of planned event
+     */
     private ImportanceLevel importanceLevel;
 
     public Event(){}
@@ -16,14 +32,28 @@ public class Event  {
         this.importanceLevel = importanceLevel;
     }
 
+
+    /**
+     * Gets the events date
+     * @return this events date
+     */
     public String  getEventDate() {
         return eventDate;
     }
 
+    /**
+     * Changes the date of this event
+     * @param eventDate
+     */
     public void setEventDate(String eventDate) {
         this.eventDate = eventDate;
     }
 
+
+    /**
+     *
+     * @return
+     */
     public String getEventName() {
         return eventName;
     }

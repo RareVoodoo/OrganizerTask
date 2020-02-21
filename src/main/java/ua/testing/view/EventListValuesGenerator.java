@@ -1,7 +1,7 @@
 package ua.testing.view;
 
-import ua.testing.model.Calendar;
-import ua.testing.model.Event;
+import ua.testing.model.entity.Calendar;
+import ua.testing.model.entity.Event;
 
 public enum EventListValuesGenerator {
     THREE_EVENTS, FIVE_EVENTS;
@@ -17,7 +17,6 @@ public enum EventListValuesGenerator {
                 break;
         }
     }
-
 
     private static void fillEventListWithThreeValues(Calendar calendar) {
         calendar.addNewEvent(new Event("02/21/2020", "Event1", ImportanceLevel.EASY));
